@@ -15,7 +15,17 @@ const experiences = {
         name: 'Feijoada para Delivery',
         description: 'Feijoada completa para receber em casa, disponível para entrega todos os sábados.',
         price: 69,
-        image: './feijoada-delivery.webp',
+        image: './feijoada-delivery-mobile.webp',
+        imageAlt: 'Feijoada para Delivery da Chef Ana Santos com acompanhamentos embalados',
+        imageLayout: 'portrait',
+        includes: [
+          '🍚 Arroz fresquinho',
+          '🌿 Couve refogada',
+          '🍊 Laranja suculenta',
+          '🍛 Farofa especial',
+          '🥓 Torresmo crocante',
+          '🍋 Sobremesa: Mousse de limão'
+        ],
         service: 'Delivery aos sábados',
         saturdayOnly: true,
         dishes: [
@@ -192,12 +202,18 @@ function whatsappLink(menu) {
 
 function renderMenus() {
   $('#menu-options').innerHTML = current.menus.map((menu, index) => `
-    <article class="menu-option">
-      <img src="${menu.image}" alt="${menu.name}" />
+    <article class="menu-option ${menu.imageLayout === 'portrait' ? 'menu-option-portrait' : ''}">
+      <img src="${menu.image}" alt="${menu.imageAlt || menu.name}" loading="lazy" decoding="async" />
       <div class="menu-option-copy">
         <small>${menu.badge || `Opção 0${index + 1}`}</small>
         <strong>${menu.name}</strong>
         <span>${menu.description}</span>
+        ${menu.includes ? `
+          <div class="menu-includes">
+            <b>Acompanhamentos</b>
+            <ul>${menu.includes.map((item) => `<li>${item}</li>`).join('')}</ul>
+          </div>
+        ` : ''}
         <a class="menu-whatsapp-button" href="${whatsappLink(menu)}" target="_blank" rel="noopener">
           Falar com a Chef <i aria-hidden="true">↗</i>
         </a>
