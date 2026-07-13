@@ -16,15 +16,6 @@ mainNav?.querySelectorAll('a').forEach((link) => {
   });
 });
 
-document.querySelectorAll('.occasion-card button').forEach((button) => {
-  button.addEventListener('click', () => {
-    const card = button.closest('.occasion-card');
-    const value = card?.dataset.occasion || '';
-    if (occasionSelect) occasionSelect.value = value;
-    document.querySelector('#orcamento')?.scrollIntoView({ behavior: 'smooth' });
-  });
-});
-
 document.querySelectorAll('[data-fill]').forEach((button) => {
   button.addEventListener('click', () => {
     if (occasionSelect) occasionSelect.value = button.dataset.fill;

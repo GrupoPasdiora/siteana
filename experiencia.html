@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Experiência | Chef Ana Santos</title>
+  <meta name="description" content="Escolha os pratos, informe a data e calcule uma estimativa para sua experiência com a Chef Ana Santos." />
+  <meta name="theme-color" content="#03140d" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body class="experience-body">
+  <div class="page-glow" aria-hidden="true"></div>
+
+  <header class="site-header experience-header">
+    <a class="brand" href="./index.html" aria-label="Voltar para o site da Chef Ana Santos">
+      <img src="./logo-symbol.png" alt="Símbolo da Chef Ana Santos" />
+      <span><strong>Chef Ana Santos</strong><small>Gastronomia & Eventos</small></span>
+    </a>
+    <a class="back-link" href="./index.html#experiencias">← Todas as experiências</a>
+  </header>
+
+  <main class="experience-main">
+    <section class="experience-hero" aria-labelledby="experience-title">
+      <div class="experience-hero-media"><img id="experience-image" src="./chef-white-pan.webp" alt="" /></div>
+      <div class="experience-hero-overlay" aria-hidden="true"></div>
+      <div class="container experience-hero-content">
+        <p class="eyebrow" id="experience-eyebrow">Experiência sob medida</p>
+        <h1 id="experience-title">Feijoada Premium</h1>
+        <p id="experience-intro">Escolha a data e o número de pessoas para visualizar as quantidades.</p>
+        <a class="btn btn-primary" href="#calculadora">Montar orçamento</a>
+      </div>
+    </section>
+
+    <section class="experience-builder" id="calculadora" aria-labelledby="builder-title">
+      <div class="container">
+        <div class="section-heading builder-heading">
+          <p class="eyebrow">Orçamento demonstrativo</p>
+          <h2 id="builder-title">Informe os detalhes. A conta se ajusta automaticamente.</h2>
+          <p>Os pratos e valores abaixo são demonstrativos e poderão ser alterados depois pela equipe.</p>
+        </div>
+
+        <div class="builder-grid">
+          <div class="builder-left">
+            <section class="builder-panel event-details" aria-labelledby="details-title">
+              <div class="panel-heading">
+                <span>01</span>
+                <div><h3 id="details-title">Detalhes do pedido</h3><p>Quantidade livre: 10, 12, 20, 30 pessoas ou o número que você precisar.</p></div>
+              </div>
+
+              <div class="field-grid">
+                <label>Data desejada<input type="date" id="event-date" /></label>
+                <label>Número de pessoas<input type="number" id="guest-count" min="1" step="1" value="10" inputmode="numeric" /></label>
+              </div>
+
+              <fieldset class="feijoada-mode" id="feijoada-mode">
+                <legend>Como deseja a Feijoada Premium?</legend>
+                <label class="mode-option">
+                  <input type="radio" name="service-mode" value="saturday" checked />
+                  <span><strong>Sábado da Feijoada</strong><small>Produção regular de todos os sábados, sem taxa de data exclusiva.</small></span>
+                </label>
+                <label class="mode-option">
+                  <input type="radio" name="service-mode" value="exclusive" />
+                  <span><strong>Data exclusiva</strong><small>Produção reservada para a data escolhida, com taxa demonstrativa de exclusividade.</small></span>
+                </label>
+                <p class="date-feedback" id="date-feedback" aria-live="polite"></p>
+              </fieldset>
+            </section>
+
+            <section class="builder-panel" aria-labelledby="menu-options-title">
+              <div class="panel-heading">
+                <span>02</span>
+                <div><h3 id="menu-options-title">Escolha uma opção</h3><p>Selecione o cardápio demonstrativo que mais combina com a ocasião.</p></div>
+              </div>
+              <div class="menu-options" id="menu-options"></div>
+            </section>
+
+            <section class="builder-panel" aria-labelledby="dishes-title">
+              <div class="panel-heading">
+                <span>03</span>
+                <div><h3 id="dishes-title">Pratos e quantidades</h3><p>O sistema recalcula cada item conforme o número de pessoas.</p></div>
+              </div>
+              <div class="calculated-dishes" id="calculated-dishes" aria-live="polite"></div>
+            </section>
+          </div>
+
+          <aside class="budget-summary" aria-labelledby="summary-title">
+            <p class="eyebrow">Seu resumo</p>
+            <h2 id="summary-title">Estimativa do pedido</h2>
+            <div class="summary-lines">
+              <div><span>Experiência</span><strong id="summary-experience">Feijoada Premium</strong></div>
+              <div><span>Cardápio</span><strong id="summary-menu">—</strong></div>
+              <div><span>Data</span><strong id="summary-date">A definir</strong></div>
+              <div><span>Pessoas</span><strong id="summary-guests">10</strong></div>
+              <div id="summary-mode-row"><span>Formato</span><strong id="summary-mode">Sábado da Feijoada</strong></div>
+            </div>
+
+            <div class="estimate-total">
+              <span>Estimativa demonstrativa</span>
+              <strong id="summary-total">R$ 0,00</strong>
+              <small id="summary-breakdown">Valores sujeitos à confirmação da Chef Ana Santos.</small>
+            </div>
+
+            <form class="lead-fields" id="experience-form">
+              <label>Seu nome<input type="text" id="customer-name" placeholder="Como podemos chamar você?" required /></label>
+              <label>Seu WhatsApp<input type="tel" id="customer-whatsapp" placeholder="(69) 99999-9999" required /></label>
+              <label>Observação<textarea id="customer-note" rows="3" placeholder="Conte algum detalhe importante, se desejar."></textarea></label>
+              <button class="btn btn-primary" type="submit">Solicitar orçamento no WhatsApp</button>
+            </form>
+            <p class="mock-note">Demonstração: pratos, preços e número de atendimento são provisórios.</p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="other-experiences" aria-labelledby="other-title">
+      <div class="container">
+        <p class="eyebrow">Continue explorando</p>
+        <h2 id="other-title">Outras experiências</h2>
+        <nav class="other-links" id="other-links" aria-label="Outras experiências gastronômicas"></nav>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <a class="footer-brand" href="./index.html"><img src="./logo-symbol.png" alt="" /><span>Chef Ana Santos</span></a>
+      <p>Da Amazônia às mesas mais especiais do Brasil.</p>
+      <div class="footer-links"><a href="./index.html#experiencias">Experiências</a><a href="./index.html#orcamento">Contato</a></div>
+    </div>
+  </footer>
+
+  <script src="./experiencia.js"></script>
+</body>
+</html>
