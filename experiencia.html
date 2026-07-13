@@ -6,6 +6,7 @@
   <title>Experiência | Chef Ana Santos</title>
   <meta name="description" content="Escolha os pratos, informe a data e calcule uma estimativa para sua experiência com a Chef Ana Santos." />
   <meta name="theme-color" content="#03140d" />
+  <link rel="icon" href="./logo-symbol.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -30,7 +31,18 @@
         <p class="eyebrow" id="experience-eyebrow">Experiência sob medida</p>
         <h1 id="experience-title">Feijoada Premium</h1>
         <p id="experience-intro">Escolha a data e o número de pessoas para visualizar as quantidades.</p>
-        <a class="btn btn-primary" href="#calculadora">Montar orçamento</a>
+        <a class="btn btn-primary" href="#opcoes">Ver opções</a>
+      </div>
+    </section>
+
+    <section class="experience-choices" id="opcoes" aria-labelledby="choices-title">
+      <div class="container">
+        <div class="section-heading choices-heading">
+          <p class="eyebrow" id="choices-eyebrow">Escolha sua opção</p>
+          <h2 id="choices-title">Qual experiência combina com a sua ocasião?</h2>
+          <p id="choices-intro">Selecione um cardápio para continuar com o cálculo.</p>
+        </div>
+        <div class="menu-options choice-cards" id="menu-options"></div>
       </div>
     </section>
 
@@ -38,7 +50,7 @@
       <div class="container">
         <div class="section-heading builder-heading">
           <p class="eyebrow">Orçamento demonstrativo</p>
-          <h2 id="builder-title">Informe os detalhes. A conta se ajusta automaticamente.</h2>
+          <h2 id="builder-title">Agora informe os detalhes.</h2>
           <p>Os pratos e valores abaixo são demonstrativos e poderão ser alterados depois pela equipe.</p>
         </div>
 
@@ -54,32 +66,12 @@
                 <label>Data desejada<input type="date" id="event-date" /></label>
                 <label>Número de pessoas<input type="number" id="guest-count" min="1" step="1" value="10" inputmode="numeric" /></label>
               </div>
-
-              <fieldset class="feijoada-mode" id="feijoada-mode">
-                <legend>Como deseja a Feijoada Premium?</legend>
-                <label class="mode-option">
-                  <input type="radio" name="service-mode" value="saturday" checked />
-                  <span><strong>Sábado da Feijoada</strong><small>Produção regular de todos os sábados, sem taxa de data exclusiva.</small></span>
-                </label>
-                <label class="mode-option">
-                  <input type="radio" name="service-mode" value="exclusive" />
-                  <span><strong>Data exclusiva</strong><small>Produção reservada para a data escolhida, com taxa demonstrativa de exclusividade.</small></span>
-                </label>
-                <p class="date-feedback" id="date-feedback" aria-live="polite"></p>
-              </fieldset>
-            </section>
-
-            <section class="builder-panel" aria-labelledby="menu-options-title">
-              <div class="panel-heading">
-                <span>02</span>
-                <div><h3 id="menu-options-title">Escolha uma opção</h3><p>Selecione o cardápio demonstrativo que mais combina com a ocasião.</p></div>
-              </div>
-              <div class="menu-options" id="menu-options"></div>
+              <p class="date-feedback" id="date-feedback" aria-live="polite"></p>
             </section>
 
             <section class="builder-panel" aria-labelledby="dishes-title">
               <div class="panel-heading">
-                <span>03</span>
+                <span>02</span>
                 <div><h3 id="dishes-title">Pratos e quantidades</h3><p>O sistema recalcula cada item conforme o número de pessoas.</p></div>
               </div>
               <div class="calculated-dishes" id="calculated-dishes" aria-live="polite"></div>
@@ -94,7 +86,7 @@
               <div><span>Cardápio</span><strong id="summary-menu">—</strong></div>
               <div><span>Data</span><strong id="summary-date">A definir</strong></div>
               <div><span>Pessoas</span><strong id="summary-guests">10</strong></div>
-              <div id="summary-mode-row"><span>Formato</span><strong id="summary-mode">Sábado da Feijoada</strong></div>
+              <div id="summary-mode-row"><span>Atendimento</span><strong id="summary-mode">—</strong></div>
             </div>
 
             <div class="estimate-total">

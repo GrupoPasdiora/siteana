@@ -2,19 +2,22 @@ const WHATSAPP_NUMBER = '5569999999999'; // Substitua pelo número real da Chef 
 
 const experiences = {
   feijoada: {
-    title: 'Feijoada Premium',
+    title: 'Feijoada',
     eyebrow: 'Especialidade brasileira',
-    intro: 'Todos os sábados ou em uma data exclusiva. O sistema calcula cada acompanhamento para o número exato de convidados.',
-    image: './chef-white-pan.webp',
-    mode: true,
-    exclusiveFee: 300,
+    intro: 'Escolha entre a Feijoada para Delivery aos sábados ou a Feijoada Premium para o seu evento.',
+    image: './feijoada-hero.webp',
+    choicesTitle: 'Como você deseja sua feijoada?',
+    choicesIntro: 'Escolha uma das duas opções. Depois, informe a data e o número de pessoas para calcular os pratos.',
     menus: [
       {
-        id: 'classica',
-        name: 'Feijoada Premium Clássica',
-        description: 'A composição completa da casa para um almoço brasileiro farto e elegante.',
-        price: 89,
-        image: './chef-white-knife.webp',
+        id: 'delivery',
+        badge: 'Todos os sábados',
+        name: 'Feijoada para Delivery',
+        description: 'Feijoada completa para receber em casa, disponível para entrega todos os sábados.',
+        price: 69,
+        image: './feijoada-cards.webp',
+        service: 'Delivery aos sábados',
+        saturdayOnly: true,
         dishes: [
           { name: 'Feijoada da Chef', perPerson: 0.4, unit: 'kg' },
           { name: 'Arroz branco', perPerson: 0.15, unit: 'kg' },
@@ -25,11 +28,14 @@ const experiences = {
         ]
       },
       {
-        id: 'celebracao',
-        name: 'Feijoada Premium Celebração',
-        description: 'Feijoada completa, entrada de boteco e sobremesa individual para comemorar.',
+        id: 'eventos',
+        badge: 'Para eventos',
+        name: 'Feijoada Premium para Eventos',
+        description: 'Uma experiência completa para aniversários, encontros, empresas e comemorações.',
         price: 109,
-        image: './chef-red-counter.webp',
+        image: './feijoada-cards.webp',
+        service: 'Evento na data escolhida',
+        serviceFee: 300,
         dishes: [
           { name: 'Torresmo de entrada', perPerson: 0.1, unit: 'kg' },
           { name: 'Feijoada da Chef', perPerson: 0.4, unit: 'kg' },
@@ -46,13 +52,17 @@ const experiences = {
     eyebrow: 'Receber com fartura',
     intro: 'Menus demonstrativos para aniversários, encontros de família, recepções e confraternizações de qualquer tamanho.',
     image: './chef-red-counter.webp',
+    choicesTitle: 'Escolha o menu para seu evento',
+    choicesIntro: 'Selecione a proposta que mais combina com a ocasião e calcule as quantidades para seus convidados.',
     menus: [
       {
         id: 'brasileiro',
+        badge: 'Menu brasileiro',
         name: 'Celebração Brasileira',
         description: 'Sabores afetivos em uma apresentação pensada para servir grupos.',
         price: 118,
         image: './nhoque-ragu.webp',
+        service: 'Evento na data escolhida',
         dishes: [
           { name: 'Petiscos de boas-vindas', perPerson: 3, unit: 'un.' },
           { name: 'Filé ao molho da casa', perPerson: 0.22, unit: 'kg' },
@@ -63,10 +73,12 @@ const experiences = {
       },
       {
         id: 'italiano',
+        badge: 'Menu italiano',
         name: 'Mesa Italiana',
         description: 'Massas artesanais e molhos encorpados para uma comemoração acolhedora.',
         price: 105,
         image: './ravioli-salvia.webp',
+        service: 'Evento na data escolhida',
         dishes: [
           { name: 'Caponata e pães', perPerson: 0.12, unit: 'kg' },
           { name: 'Ravióli artesanal', perPerson: 0.28, unit: 'kg' },
@@ -82,13 +94,17 @@ const experiences = {
     eyebrow: 'Uma noite especial',
     intro: 'Escolha uma proposta de menu autoral e veja a quantidade prevista para cada etapa do jantar.',
     image: './chef-green.webp',
+    choicesTitle: 'Escolha o menu para seu jantar',
+    choicesIntro: 'Duas propostas completas para uma noite especial. Selecione uma para calcular o orçamento.',
     menus: [
       {
         id: 'terra',
+        badge: 'Carnes e sabores intensos',
         name: 'Menu Terra',
         description: 'Sabores intensos, texturas cremosas e finalização elegante.',
         price: 159,
         image: './file-mignon-pure.webp',
+        service: 'Jantar na data escolhida',
         dishes: [
           { name: 'Entrada da estação', perPerson: 1, unit: 'porção' },
           { name: 'Filé ao molho de vinho', perPerson: 0.22, unit: 'kg' },
@@ -98,10 +114,12 @@ const experiences = {
       },
       {
         id: 'mar',
+        badge: 'Peixes e frutos do mar',
         name: 'Menu Mar',
         description: 'Uma sequência leve com camarões, peixe e ervas frescas.',
         price: 169,
         image: './risoto-camaroes.webp',
+        service: 'Jantar na data escolhida',
         dishes: [
           { name: 'Entrada cítrica', perPerson: 1, unit: 'porção' },
           { name: 'Risoto de camarões', perPerson: 0.32, unit: 'kg' },
@@ -116,13 +134,17 @@ const experiences = {
     eyebrow: 'Praticidade com assinatura',
     intro: 'Os pratos chegam preparados e porcionados. Você recebe instruções simples para aquecer, finalizar e servir.',
     image: './chef-white-knife.webp',
+    choicesTitle: 'Escolha o que deseja finalizar em casa',
+    choicesIntro: 'Selecione uma proposta. Os pratos chegam preparados e com orientações para servir no melhor ponto.',
     menus: [
       {
         id: 'conforto',
+        badge: 'Massas artesanais',
         name: 'Menu Conforto',
         description: 'Pratos afetivos prontos para a última etapa na sua cozinha.',
         price: 79,
         image: './nhoque-ragu.webp',
+        service: 'Retirada ou entrega combinada',
         dishes: [
           { name: 'Nhoque artesanal', perPerson: 0.3, unit: 'kg' },
           { name: 'Ragu da casa', perPerson: 0.18, unit: 'kg' },
@@ -132,10 +154,12 @@ const experiences = {
       },
       {
         id: 'receber',
+        badge: 'Receber com elegância',
         name: 'Menu Receber Bem',
         description: 'Uma composição completa que parece recém-saída da cozinha da chef.',
         price: 96,
         image: './medalhao-risoto.webp',
+        service: 'Retirada ou entrega combinada',
         dishes: [
           { name: 'Medalhão pré-selado', perPerson: 0.22, unit: 'kg' },
           { name: 'Risoto para finalizar', perPerson: 0.22, unit: 'kg' },
@@ -155,7 +179,6 @@ let selectedMenuId = current.menus[0].id;
 const $ = (selector) => document.querySelector(selector);
 const guestInput = $('#guest-count');
 const dateInput = $('#event-date');
-const modeFieldset = $('#feijoada-mode');
 
 function validGuests() {
   const value = Math.floor(Number(guestInput.value));
@@ -164,10 +187,6 @@ function validGuests() {
 
 function selectedMenu() {
   return current.menus.find((menu) => menu.id === selectedMenuId) || current.menus[0];
-}
-
-function selectedMode() {
-  return document.querySelector('input[name="service-mode"]:checked')?.value || 'saturday';
 }
 
 function money(value) {
@@ -200,10 +219,11 @@ function renderMenus() {
       <input type="radio" name="menu-option" value="${menu.id}" ${menu.id === selectedMenuId ? 'checked' : ''} />
       <img src="${menu.image}" alt="${menu.name}" />
       <span class="menu-option-copy">
-        <small>Opção 0${index + 1}</small>
+        <small>${menu.badge || `Opção 0${index + 1}`}</small>
         <strong>${menu.name}</strong>
         <span>${menu.description}</span>
         <b>${money(menu.price)} por pessoa</b>
+        <span class="menu-option-action">${menu.id === selectedMenuId ? 'Opção selecionada' : 'Escolher esta opção'} <i aria-hidden="true">${menu.id === selectedMenuId ? '✓' : '→'}</i></span>
       </span>
     </label>
   `).join('');
@@ -212,26 +232,44 @@ function renderMenus() {
     input.addEventListener('change', () => {
       selectedMenuId = input.value;
       renderMenus();
+      updateDateFeedback();
       updateCalculation();
     });
   });
 }
 
-function updateDateMode() {
-  if (!current.mode || !dateInput.value) return;
-  const suggestedMode = isSaturday(dateInput.value) ? 'saturday' : 'exclusive';
-  const input = document.querySelector(`input[name="service-mode"][value="${suggestedMode}"]`);
-  if (input) input.checked = true;
-  $('#date-feedback').textContent = suggestedMode === 'saturday'
-    ? 'A data escolhida é sábado e entrou no formato de produção regular.'
-    : 'A data escolhida não é sábado e entrou como data exclusiva.';
+function updateDateFeedback() {
+  const menu = selectedMenu();
+  const feedback = $('#date-feedback');
+  dateInput.setCustomValidity('');
+  feedback.classList.remove('error');
+
+  if (!menu.saturdayOnly) {
+    feedback.textContent = dateInput.value ? 'Data considerada no orçamento demonstrativo.' : '';
+    return true;
+  }
+
+  if (!dateInput.value) {
+    feedback.textContent = 'A Feijoada para Delivery está disponível todos os sábados.';
+    return true;
+  }
+
+  if (isSaturday(dateInput.value)) {
+    feedback.textContent = 'Perfeito: a data escolhida é sábado e está disponível para Delivery.';
+    return true;
+  }
+
+  const message = 'A Feijoada para Delivery acontece aos sábados. Escolha uma data de sábado.';
+  dateInput.setCustomValidity(message);
+  feedback.textContent = message;
+  feedback.classList.add('error');
+  return false;
 }
 
 function updateCalculation() {
   const guests = validGuests();
   const menu = selectedMenu();
-  const mode = selectedMode();
-  const fee = current.mode && mode === 'exclusive' ? current.exclusiveFee : 0;
+  const fee = menu.serviceFee || 0;
   const total = (menu.price * guests) + fee;
 
   guestInput.value = guests;
@@ -247,14 +285,11 @@ function updateCalculation() {
   $('#summary-menu').textContent = menu.name;
   $('#summary-date').textContent = formatDate(dateInput.value);
   $('#summary-guests').textContent = String(guests);
+  $('#summary-mode').textContent = menu.service || 'Sob consulta';
   $('#summary-total').textContent = money(total);
   $('#summary-breakdown').textContent = fee
-    ? `${money(menu.price)} × ${guests} pessoas + ${money(fee)} de data exclusiva.`
+    ? `${money(menu.price)} × ${guests} pessoas + ${money(fee)} de estrutura para evento.`
     : `${money(menu.price)} × ${guests} pessoas. Valores sujeitos à confirmação.`;
-
-  if (current.mode) {
-    $('#summary-mode').textContent = mode === 'exclusive' ? 'Data exclusiva' : 'Sábado da Feijoada';
-  }
 }
 
 function renderOtherExperiences() {
@@ -265,33 +300,37 @@ function renderOtherExperiences() {
 }
 
 function initialize() {
+  document.body.dataset.experience = currentKey;
   document.title = `${current.title} | Chef Ana Santos`;
   $('#experience-title').textContent = current.title;
   $('#experience-eyebrow').textContent = current.eyebrow;
   $('#experience-intro').textContent = current.intro;
   $('#experience-image').src = current.image;
   $('#experience-image').alt = `Experiência ${current.title} com a Chef Ana Santos`;
-  modeFieldset.hidden = !current.mode;
-  $('#summary-mode-row').hidden = !current.mode;
+  $('#choices-title').textContent = current.choicesTitle;
+  $('#choices-intro').textContent = current.choicesIntro;
   renderMenus();
   renderOtherExperiences();
+  updateDateFeedback();
   updateCalculation();
 }
 
 guestInput.addEventListener('input', updateCalculation);
 guestInput.addEventListener('blur', updateCalculation);
 dateInput.addEventListener('change', () => {
-  updateDateMode();
+  updateDateFeedback();
   updateCalculation();
 });
-document.querySelectorAll('input[name="service-mode"]').forEach((input) => input.addEventListener('change', updateCalculation));
 
 $('#experience-form').addEventListener('submit', (event) => {
   event.preventDefault();
+  if (!updateDateFeedback()) {
+    dateInput.reportValidity();
+    return;
+  }
   const guests = validGuests();
   const menu = selectedMenu();
-  const mode = current.mode ? (selectedMode() === 'exclusive' ? 'Data exclusiva' : 'Sábado da Feijoada') : 'Sob consulta';
-  const fee = current.mode && selectedMode() === 'exclusive' ? current.exclusiveFee : 0;
+  const fee = menu.serviceFee || 0;
   const total = (menu.price * guests) + fee;
   const dishes = menu.dishes.map((dish) => `- ${dish.name}: ${formatQuantity(dish, guests)}`).join('\n');
   const message = [
@@ -303,7 +342,7 @@ $('#experience-form').addEventListener('submit', (event) => {
     `Cardápio: ${menu.name}`,
     `Data: ${formatDate(dateInput.value)}`,
     `Pessoas: ${guests}`,
-    ...(current.mode ? [`Formato: ${mode}`] : []),
+    `Atendimento: ${menu.service || 'Sob consulta'}`,
     '',
     'Quantidades calculadas:',
     dishes,
