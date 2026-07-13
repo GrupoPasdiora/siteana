@@ -1,4 +1,4 @@
-const WHATSAPP_NUMBER = '5569999999999'; // Substitua pelo número real da Chef Ana Santos.
+const WHATSAPP_NUMBER = '556999950406';
 
 const experiences = {
   feijoada: {
@@ -7,7 +7,7 @@ const experiences = {
     intro: 'Escolha entre a Feijoada para Delivery aos sábados ou a Feijoada Premium para o seu evento.',
     image: './feijoada-hero.webp',
     choicesTitle: 'Como você deseja sua feijoada?',
-    choicesIntro: 'Escolha uma das duas opções. Depois, informe a data e o número de pessoas para calcular os pratos.',
+    choicesIntro: 'Escolha uma das duas opções e fale diretamente com a Chef Ana para consultar os detalhes.',
     menus: [
       {
         id: 'delivery',
@@ -53,7 +53,7 @@ const experiences = {
     intro: 'Menus demonstrativos para aniversários, encontros de família, recepções e confraternizações de qualquer tamanho.',
     image: './chef-red-counter.webp',
     choicesTitle: 'Escolha o menu para seu evento',
-    choicesIntro: 'Selecione a proposta que mais combina com a ocasião e calcule as quantidades para seus convidados.',
+    choicesIntro: 'Selecione a proposta que mais combina com a ocasião e fale diretamente com a Chef Ana.',
     menus: [
       {
         id: 'brasileiro',
@@ -92,10 +92,10 @@ const experiences = {
   jantar: {
     title: 'Jantar Intimista',
     eyebrow: 'Uma noite especial',
-    intro: 'Escolha uma proposta de menu autoral e veja a quantidade prevista para cada etapa do jantar.',
+    intro: 'Escolha uma proposta de menu autoral para uma noite especial.',
     image: './chef-green.webp',
     choicesTitle: 'Escolha o menu para seu jantar',
-    choicesIntro: 'Duas propostas completas para uma noite especial. Selecione uma para calcular o orçamento.',
+    choicesIntro: 'Duas propostas completas para uma noite especial. Escolha uma e converse com a Chef Ana.',
     menus: [
       {
         id: 'terra',
@@ -174,226 +174,36 @@ const experiences = {
 const type = new URLSearchParams(window.location.search).get('tipo');
 const currentKey = Object.hasOwn(experiences, type) ? type : 'feijoada';
 const current = experiences[currentKey];
-let selectedMenuId = current.menus[0].id;
-const calculatorState = Object.fromEntries(current.menus.map((menu) => [menu.id, { guests: 10, date: '' }]));
 
 const $ = (selector) => document.querySelector(selector);
 
-function menuById(menuId) {
-  return current.menus.find((menu) => menu.id === menuId) || current.menus[0];
-}
-
-function validGuests(menuId) {
-  const value = Math.floor(Number(calculatorState[menuId].guests));
-  return Number.isFinite(value) && value > 0 ? value : 1;
-}
-
-function money(value) {
-  return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
-}
-
-function formatQuantity(item, guests) {
-  const total = item.perPerson * guests;
-  if (item.unit === 'un.') return `${Math.ceil(total)} un.`;
-  if (item.unit === 'porção') return `${Math.ceil(total)} ${Math.ceil(total) === 1 ? 'porção' : 'porções'}`;
-  const digits = total < 10 ? 2 : 1;
-  return `${total.toLocaleString('pt-BR', { maximumFractionDigits: digits })} ${item.unit}`;
-}
-
-function formatDate(value) {
-  if (!value) return 'A definir';
-  const [year, month, day] = value.split('-').map(Number);
-  return new Intl.DateTimeFormat('pt-BR').format(new Date(year, month - 1, day));
-}
-
-function isSaturday(value) {
-  if (!value) return false;
-  const [year, month, day] = value.split('-').map(Number);
-  return new Date(year, month - 1, day).getDay() === 6;
-}
-
-function calculationFor(menuId) {
-  const menu = menuById(menuId);
-  const guests = validGuests(menuId);
-  const fee = menu.serviceFee || 0;
-  return { menu, guests, fee, total: (menu.price * guests) + fee };
-}
-
-function dishesMarkup(menu, guests) {
-  return menu.dishes.map((dish) => `
-    <div class="inline-dish">
-      <span>${dish.name}</span>
-      <strong>${formatQuantity(dish, guests)}</strong>
-    </div>
-  `).join('');
-}
-
-function breakdownText(menu, guests, fee) {
-  return fee
-    ? `${money(menu.price)} × ${guests} pessoas + ${money(fee)} de estrutura.`
-    : `${money(menu.price)} × ${guests} pessoas.`;
-}
-
-function calculatorMarkup(menu) {
-  const state = calculatorState[menu.id];
-  const { guests, fee, total } = calculationFor(menu.id);
-  const initialFeedback = menu.saturdayOnly ? 'Disponível para entrega todos os sábados.' : 'Escolha a data desejada.';
-
-  return `
-    <div class="inline-calculator" data-calculator="${menu.id}">
-      <div class="inline-calculator-title">
-        <span>Calcule sua opção</span>
-        <small>${menu.service || 'Atendimento sob consulta'}</small>
-      </div>
-      <div class="inline-fields">
-        <label>
-          Pessoas
-          <input type="number" min="1" step="1" inputmode="numeric" value="${guests}" data-guests="${menu.id}" />
-        </label>
-        <label>
-          Data
-          <input type="date" value="${state.date}" data-date="${menu.id}" />
-        </label>
-      </div>
-      <p class="inline-feedback" data-feedback="${menu.id}" aria-live="polite">${initialFeedback}</p>
-      <div class="inline-total" aria-live="polite">
-        <span>Estimativa</span>
-        <strong data-total="${menu.id}">${money(total)}</strong>
-        <small data-breakdown="${menu.id}">${breakdownText(menu, guests, fee)}</small>
-      </div>
-      <details class="inline-details">
-        <summary>Ver pratos e quantidades calculadas</summary>
-        <div data-dishes="${menu.id}">${dishesMarkup(menu, guests)}</div>
-      </details>
-      <button class="inline-budget-button" type="button" data-budget-action="${menu.id}">Solicitar este orçamento <span aria-hidden="true">↗</span></button>
-    </div>
-  `;
-}
-
-function renderMenus() {
-  $('#menu-options').innerHTML = current.menus.map((menu, index) => {
-    const selected = menu.id === selectedMenuId;
-    return `
-      <article class="menu-option ${selected ? 'selected' : ''}" data-menu-card="${menu.id}">
-        <input class="menu-radio" id="menu-${menu.id}" type="radio" name="menu-option" value="${menu.id}" ${selected ? 'checked' : ''} />
-        <label class="menu-option-select" for="menu-${menu.id}">
-          <img src="${menu.image}" alt="${menu.name}" />
-          <span class="menu-option-copy">
-            <small>${menu.badge || `Opção 0${index + 1}`}</small>
-            <strong>${menu.name}</strong>
-            <span>${menu.description}</span>
-            <b>${money(menu.price)} por pessoa</b>
-            <span class="menu-option-action">${selected ? 'Calcule abaixo' : 'Escolher e calcular'} <i aria-hidden="true">${selected ? '↓' : '→'}</i></span>
-          </span>
-        </label>
-        ${selected ? calculatorMarkup(menu) : ''}
-      </article>
-    `;
-  }).join('');
-
-  document.querySelectorAll('input[name="menu-option"]').forEach((input) => {
-    input.addEventListener('change', () => {
-      selectedMenuId = input.value;
-      renderMenus();
-    });
-  });
-
-  document.querySelectorAll('[data-guests]').forEach((input) => {
-    input.addEventListener('input', () => {
-      const menuId = input.dataset.guests;
-      calculatorState[menuId].guests = input.value;
-      updateInlineCalculator(menuId);
-    });
-    input.addEventListener('blur', () => {
-      const menuId = input.dataset.guests;
-      const guests = validGuests(menuId);
-      calculatorState[menuId].guests = guests;
-      input.value = guests;
-      updateInlineCalculator(menuId);
-    });
-  });
-
-  document.querySelectorAll('[data-date]').forEach((input) => {
-    input.addEventListener('change', () => {
-      const menuId = input.dataset.date;
-      calculatorState[menuId].date = input.value;
-      updateInlineCalculator(menuId);
-    });
-  });
-
-  document.querySelectorAll('[data-budget-action]').forEach((button) => {
-    button.addEventListener('click', () => requestBudget(button.dataset.budgetAction));
-  });
-
-  updateInlineCalculator(selectedMenuId);
-}
-
-function validateDate(menuId) {
-  const menu = menuById(menuId);
-  const state = calculatorState[menuId];
-  const input = document.querySelector(`[data-date="${menuId}"]`);
-  const feedback = document.querySelector(`[data-feedback="${menuId}"]`);
-  if (!input || !feedback) return true;
-
-  input.setCustomValidity('');
-  feedback.classList.remove('error');
-
-  if (!menu.saturdayOnly) {
-    feedback.textContent = state.date ? 'Data incluída na estimativa.' : 'Escolha a data desejada.';
-    return true;
-  }
-  if (!state.date) {
-    feedback.textContent = 'Disponível para entrega todos os sábados.';
-    return true;
-  }
-  if (isSaturday(state.date)) {
-    feedback.textContent = 'Sábado disponível para Delivery.';
-    return true;
-  }
-
-  const message = 'Para Delivery, escolha uma data de sábado.';
-  input.setCustomValidity(message);
-  feedback.textContent = message;
-  feedback.classList.add('error');
-  return false;
-}
-
-function updateInlineCalculator(menuId) {
-  const { menu, guests, fee, total } = calculationFor(menuId);
-  const totalElement = document.querySelector(`[data-total="${menuId}"]`);
-  if (!totalElement) return;
-  totalElement.textContent = money(total);
-  document.querySelector(`[data-breakdown="${menuId}"]`).textContent = breakdownText(menu, guests, fee);
-  document.querySelector(`[data-dishes="${menuId}"]`).innerHTML = dishesMarkup(menu, guests);
-  validateDate(menuId);
-}
-
-function requestBudget(menuId) {
-  if (!validateDate(menuId)) {
-    document.querySelector(`[data-date="${menuId}"]`)?.reportValidity();
-    return;
-  }
-
-  const { menu, guests, total } = calculationFor(menuId);
-  const state = calculatorState[menuId];
-  const dishes = menu.dishes.map((dish) => `- ${dish.name}: ${formatQuantity(dish, guests)}`).join('\n');
+function whatsappLink(menu) {
   const message = [
-    'Olá, quero confirmar este orçamento demonstrativo do site da Chef Ana Santos.',
+    'Olá, Chef Ana! Vi o seu site e gostaria de saber mais sobre esta opção.',
     '',
     `Experiência: ${current.title}`,
     `Opção escolhida: ${menu.name}`,
-    `Data: ${formatDate(state.date)}`,
-    `Pessoas: ${guests}`,
-    `Atendimento: ${menu.service || 'Sob consulta'}`,
     '',
-    'Quantidades calculadas:',
-    dishes,
-    '',
-    `Estimativa demonstrativa: ${money(total)}`,
-    'Aguardo a confirmação da equipe.'
+    'Pode me passar mais informações?'
   ].join('\n');
 
-  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank', 'noopener');
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+}
+
+function renderMenus() {
+  $('#menu-options').innerHTML = current.menus.map((menu, index) => `
+    <article class="menu-option">
+      <img src="${menu.image}" alt="${menu.name}" />
+      <div class="menu-option-copy">
+        <small>${menu.badge || `Opção 0${index + 1}`}</small>
+        <strong>${menu.name}</strong>
+        <span>${menu.description}</span>
+        <a class="menu-whatsapp-button" href="${whatsappLink(menu)}" target="_blank" rel="noopener">
+          Falar com a Chef <i aria-hidden="true">↗</i>
+        </a>
+      </div>
+    </article>
+  `).join('');
 }
 
 function renderOtherExperiences() {
