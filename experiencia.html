@@ -43,67 +43,7 @@
           <p id="choices-intro">Selecione um cardápio para continuar com o cálculo.</p>
         </div>
         <div class="menu-options choice-cards" id="menu-options"></div>
-      </div>
-    </section>
-
-    <section class="experience-builder" id="calculadora" aria-labelledby="builder-title">
-      <div class="container">
-        <div class="section-heading builder-heading">
-          <p class="eyebrow">Orçamento demonstrativo</p>
-          <h2 id="builder-title">Agora informe os detalhes.</h2>
-          <p>Os pratos e valores abaixo são demonstrativos e poderão ser alterados depois pela equipe.</p>
-        </div>
-
-        <div class="builder-grid">
-          <div class="builder-left">
-            <section class="builder-panel event-details" aria-labelledby="details-title">
-              <div class="panel-heading">
-                <span>01</span>
-                <div><h3 id="details-title">Detalhes do pedido</h3><p>Quantidade livre: 10, 12, 20, 30 pessoas ou o número que você precisar.</p></div>
-              </div>
-
-              <div class="field-grid">
-                <label>Data desejada<input type="date" id="event-date" /></label>
-                <label>Número de pessoas<input type="number" id="guest-count" min="1" step="1" value="10" inputmode="numeric" /></label>
-              </div>
-              <p class="date-feedback" id="date-feedback" aria-live="polite"></p>
-            </section>
-
-            <section class="builder-panel" aria-labelledby="dishes-title">
-              <div class="panel-heading">
-                <span>02</span>
-                <div><h3 id="dishes-title">Pratos e quantidades</h3><p>O sistema recalcula cada item conforme o número de pessoas.</p></div>
-              </div>
-              <div class="calculated-dishes" id="calculated-dishes" aria-live="polite"></div>
-            </section>
-          </div>
-
-          <aside class="budget-summary" aria-labelledby="summary-title">
-            <p class="eyebrow">Seu resumo</p>
-            <h2 id="summary-title">Estimativa do pedido</h2>
-            <div class="summary-lines">
-              <div><span>Experiência</span><strong id="summary-experience">Feijoada Premium</strong></div>
-              <div><span>Cardápio</span><strong id="summary-menu">—</strong></div>
-              <div><span>Data</span><strong id="summary-date">A definir</strong></div>
-              <div><span>Pessoas</span><strong id="summary-guests">10</strong></div>
-              <div id="summary-mode-row"><span>Atendimento</span><strong id="summary-mode">—</strong></div>
-            </div>
-
-            <div class="estimate-total">
-              <span>Estimativa demonstrativa</span>
-              <strong id="summary-total">R$ 0,00</strong>
-              <small id="summary-breakdown">Valores sujeitos à confirmação da Chef Ana Santos.</small>
-            </div>
-
-            <form class="lead-fields" id="experience-form">
-              <label>Seu nome<input type="text" id="customer-name" placeholder="Como podemos chamar você?" required /></label>
-              <label>Seu WhatsApp<input type="tel" id="customer-whatsapp" placeholder="(69) 99999-9999" required /></label>
-              <label>Observação<textarea id="customer-note" rows="3" placeholder="Conte algum detalhe importante, se desejar."></textarea></label>
-              <button class="btn btn-primary" type="submit">Solicitar orçamento no WhatsApp</button>
-            </form>
-            <p class="mock-note">Demonstração: pratos, preços e número de atendimento são provisórios.</p>
-          </aside>
-        </div>
+        <p class="choice-note">Valores e pratos demonstrativos. A equipe confirma disponibilidade e proposta final pelo WhatsApp.</p>
       </div>
     </section>
 

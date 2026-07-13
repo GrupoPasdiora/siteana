@@ -175,18 +175,17 @@ const type = new URLSearchParams(window.location.search).get('tipo');
 const currentKey = Object.hasOwn(experiences, type) ? type : 'feijoada';
 const current = experiences[currentKey];
 let selectedMenuId = current.menus[0].id;
+const calculatorState = Object.fromEntries(current.menus.map((menu) => [menu.id, { guests: 10, date: '' }]));
 
 const $ = (selector) => document.querySelector(selector);
-const guestInput = $('#guest-count');
-const dateInput = $('#event-date');
 
-function validGuests() {
-  const value = Math.floor(Number(guestInput.value));
-  return Number.isFinite(value) && value > 0 ? value : 1;
+function menuById(menuId) {
+  return current.menus.find((menu) => menu.id === menuId) || current.menus[0];
 }
 
-function selectedMenu() {
-  return current.menus.find((menu) => menu.id === selectedMenuId) || current.menus[0];
+function validGuests(menuId) {
+  const value = Math.floor(Number(calculatorState[menuId].guests));
+  return Number.isFinite(value) && value > 0 ? value : 1;
 }
 
 function money(value) {
@@ -213,83 +212,188 @@ function isSaturday(value) {
   return new Date(year, month - 1, day).getDay() === 6;
 }
 
-function renderMenus() {
-  $('#menu-options').innerHTML = current.menus.map((menu, index) => `
-    <label class="menu-option ${menu.id === selectedMenuId ? 'selected' : ''}">
-      <input type="radio" name="menu-option" value="${menu.id}" ${menu.id === selectedMenuId ? 'checked' : ''} />
-      <img src="${menu.image}" alt="${menu.name}" />
-      <span class="menu-option-copy">
-        <small>${menu.badge || `Opção 0${index + 1}`}</small>
-        <strong>${menu.name}</strong>
-        <span>${menu.description}</span>
-        <b>${money(menu.price)} por pessoa</b>
-        <span class="menu-option-action">${menu.id === selectedMenuId ? 'Opção selecionada' : 'Escolher esta opção'} <i aria-hidden="true">${menu.id === selectedMenuId ? '✓' : '→'}</i></span>
-      </span>
-    </label>
+function calculationFor(menuId) {
+  const menu = menuById(menuId);
+  const guests = validGuests(menuId);
+  const fee = menu.serviceFee || 0;
+  return { menu, guests, fee, total: (menu.price * guests) + fee };
+}
+
+function dishesMarkup(menu, guests) {
+  return menu.dishes.map((dish) => `
+    <div class="inline-dish">
+      <span>${dish.name}</span>
+      <strong>${formatQuantity(dish, guests)}</strong>
+    </div>
   `).join('');
+}
+
+function breakdownText(menu, guests, fee) {
+  return fee
+    ? `${money(menu.price)} × ${guests} pessoas + ${money(fee)} de estrutura.`
+    : `${money(menu.price)} × ${guests} pessoas.`;
+}
+
+function calculatorMarkup(menu) {
+  const state = calculatorState[menu.id];
+  const { guests, fee, total } = calculationFor(menu.id);
+  const initialFeedback = menu.saturdayOnly ? 'Disponível para entrega todos os sábados.' : 'Escolha a data desejada.';
+
+  return `
+    <div class="inline-calculator" data-calculator="${menu.id}">
+      <div class="inline-calculator-title">
+        <span>Calcule sua opção</span>
+        <small>${menu.service || 'Atendimento sob consulta'}</small>
+      </div>
+      <div class="inline-fields">
+        <label>
+          Pessoas
+          <input type="number" min="1" step="1" inputmode="numeric" value="${guests}" data-guests="${menu.id}" />
+        </label>
+        <label>
+          Data
+          <input type="date" value="${state.date}" data-date="${menu.id}" />
+        </label>
+      </div>
+      <p class="inline-feedback" data-feedback="${menu.id}" aria-live="polite">${initialFeedback}</p>
+      <div class="inline-total" aria-live="polite">
+        <span>Estimativa</span>
+        <strong data-total="${menu.id}">${money(total)}</strong>
+        <small data-breakdown="${menu.id}">${breakdownText(menu, guests, fee)}</small>
+      </div>
+      <details class="inline-details">
+        <summary>Ver pratos e quantidades calculadas</summary>
+        <div data-dishes="${menu.id}">${dishesMarkup(menu, guests)}</div>
+      </details>
+      <button class="inline-budget-button" type="button" data-budget-action="${menu.id}">Solicitar este orçamento <span aria-hidden="true">↗</span></button>
+    </div>
+  `;
+}
+
+function renderMenus() {
+  $('#menu-options').innerHTML = current.menus.map((menu, index) => {
+    const selected = menu.id === selectedMenuId;
+    return `
+      <article class="menu-option ${selected ? 'selected' : ''}" data-menu-card="${menu.id}">
+        <input class="menu-radio" id="menu-${menu.id}" type="radio" name="menu-option" value="${menu.id}" ${selected ? 'checked' : ''} />
+        <label class="menu-option-select" for="menu-${menu.id}">
+          <img src="${menu.image}" alt="${menu.name}" />
+          <span class="menu-option-copy">
+            <small>${menu.badge || `Opção 0${index + 1}`}</small>
+            <strong>${menu.name}</strong>
+            <span>${menu.description}</span>
+            <b>${money(menu.price)} por pessoa</b>
+            <span class="menu-option-action">${selected ? 'Calcule abaixo' : 'Escolher e calcular'} <i aria-hidden="true">${selected ? '↓' : '→'}</i></span>
+          </span>
+        </label>
+        ${selected ? calculatorMarkup(menu) : ''}
+      </article>
+    `;
+  }).join('');
 
   document.querySelectorAll('input[name="menu-option"]').forEach((input) => {
     input.addEventListener('change', () => {
       selectedMenuId = input.value;
       renderMenus();
-      updateDateFeedback();
-      updateCalculation();
     });
   });
+
+  document.querySelectorAll('[data-guests]').forEach((input) => {
+    input.addEventListener('input', () => {
+      const menuId = input.dataset.guests;
+      calculatorState[menuId].guests = input.value;
+      updateInlineCalculator(menuId);
+    });
+    input.addEventListener('blur', () => {
+      const menuId = input.dataset.guests;
+      const guests = validGuests(menuId);
+      calculatorState[menuId].guests = guests;
+      input.value = guests;
+      updateInlineCalculator(menuId);
+    });
+  });
+
+  document.querySelectorAll('[data-date]').forEach((input) => {
+    input.addEventListener('change', () => {
+      const menuId = input.dataset.date;
+      calculatorState[menuId].date = input.value;
+      updateInlineCalculator(menuId);
+    });
+  });
+
+  document.querySelectorAll('[data-budget-action]').forEach((button) => {
+    button.addEventListener('click', () => requestBudget(button.dataset.budgetAction));
+  });
+
+  updateInlineCalculator(selectedMenuId);
 }
 
-function updateDateFeedback() {
-  const menu = selectedMenu();
-  const feedback = $('#date-feedback');
-  dateInput.setCustomValidity('');
+function validateDate(menuId) {
+  const menu = menuById(menuId);
+  const state = calculatorState[menuId];
+  const input = document.querySelector(`[data-date="${menuId}"]`);
+  const feedback = document.querySelector(`[data-feedback="${menuId}"]`);
+  if (!input || !feedback) return true;
+
+  input.setCustomValidity('');
   feedback.classList.remove('error');
 
   if (!menu.saturdayOnly) {
-    feedback.textContent = dateInput.value ? 'Data considerada no orçamento demonstrativo.' : '';
+    feedback.textContent = state.date ? 'Data incluída na estimativa.' : 'Escolha a data desejada.';
+    return true;
+  }
+  if (!state.date) {
+    feedback.textContent = 'Disponível para entrega todos os sábados.';
+    return true;
+  }
+  if (isSaturday(state.date)) {
+    feedback.textContent = 'Sábado disponível para Delivery.';
     return true;
   }
 
-  if (!dateInput.value) {
-    feedback.textContent = 'A Feijoada para Delivery está disponível todos os sábados.';
-    return true;
-  }
-
-  if (isSaturday(dateInput.value)) {
-    feedback.textContent = 'Perfeito: a data escolhida é sábado e está disponível para Delivery.';
-    return true;
-  }
-
-  const message = 'A Feijoada para Delivery acontece aos sábados. Escolha uma data de sábado.';
-  dateInput.setCustomValidity(message);
+  const message = 'Para Delivery, escolha uma data de sábado.';
+  input.setCustomValidity(message);
   feedback.textContent = message;
   feedback.classList.add('error');
   return false;
 }
 
-function updateCalculation() {
-  const guests = validGuests();
-  const menu = selectedMenu();
-  const fee = menu.serviceFee || 0;
-  const total = (menu.price * guests) + fee;
+function updateInlineCalculator(menuId) {
+  const { menu, guests, fee, total } = calculationFor(menuId);
+  const totalElement = document.querySelector(`[data-total="${menuId}"]`);
+  if (!totalElement) return;
+  totalElement.textContent = money(total);
+  document.querySelector(`[data-breakdown="${menuId}"]`).textContent = breakdownText(menu, guests, fee);
+  document.querySelector(`[data-dishes="${menuId}"]`).innerHTML = dishesMarkup(menu, guests);
+  validateDate(menuId);
+}
 
-  guestInput.value = guests;
-  $('#calculated-dishes').innerHTML = menu.dishes.map((dish) => `
-    <article class="calculated-dish">
-      <span aria-hidden="true">✓</span>
-      <div><strong>${dish.name}</strong><small>Quantidade calculada para ${guests} ${guests === 1 ? 'pessoa' : 'pessoas'}</small></div>
-      <b>${formatQuantity(dish, guests)}</b>
-    </article>
-  `).join('');
+function requestBudget(menuId) {
+  if (!validateDate(menuId)) {
+    document.querySelector(`[data-date="${menuId}"]`)?.reportValidity();
+    return;
+  }
 
-  $('#summary-experience').textContent = current.title;
-  $('#summary-menu').textContent = menu.name;
-  $('#summary-date').textContent = formatDate(dateInput.value);
-  $('#summary-guests').textContent = String(guests);
-  $('#summary-mode').textContent = menu.service || 'Sob consulta';
-  $('#summary-total').textContent = money(total);
-  $('#summary-breakdown').textContent = fee
-    ? `${money(menu.price)} × ${guests} pessoas + ${money(fee)} de estrutura para evento.`
-    : `${money(menu.price)} × ${guests} pessoas. Valores sujeitos à confirmação.`;
+  const { menu, guests, total } = calculationFor(menuId);
+  const state = calculatorState[menuId];
+  const dishes = menu.dishes.map((dish) => `- ${dish.name}: ${formatQuantity(dish, guests)}`).join('\n');
+  const message = [
+    'Olá, quero confirmar este orçamento demonstrativo do site da Chef Ana Santos.',
+    '',
+    `Experiência: ${current.title}`,
+    `Opção escolhida: ${menu.name}`,
+    `Data: ${formatDate(state.date)}`,
+    `Pessoas: ${guests}`,
+    `Atendimento: ${menu.service || 'Sob consulta'}`,
+    '',
+    'Quantidades calculadas:',
+    dishes,
+    '',
+    `Estimativa demonstrativa: ${money(total)}`,
+    'Aguardo a confirmação da equipe.'
+  ].join('\n');
+
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank', 'noopener');
 }
 
 function renderOtherExperiences() {
@@ -311,49 +415,6 @@ function initialize() {
   $('#choices-intro').textContent = current.choicesIntro;
   renderMenus();
   renderOtherExperiences();
-  updateDateFeedback();
-  updateCalculation();
 }
-
-guestInput.addEventListener('input', updateCalculation);
-guestInput.addEventListener('blur', updateCalculation);
-dateInput.addEventListener('change', () => {
-  updateDateFeedback();
-  updateCalculation();
-});
-
-$('#experience-form').addEventListener('submit', (event) => {
-  event.preventDefault();
-  if (!updateDateFeedback()) {
-    dateInput.reportValidity();
-    return;
-  }
-  const guests = validGuests();
-  const menu = selectedMenu();
-  const fee = menu.serviceFee || 0;
-  const total = (menu.price * guests) + fee;
-  const dishes = menu.dishes.map((dish) => `- ${dish.name}: ${formatQuantity(dish, guests)}`).join('\n');
-  const message = [
-    'Olá, quero confirmar um orçamento demonstrativo do site da Chef Ana Santos.',
-    '',
-    `Nome: ${$('#customer-name').value}`,
-    `Meu WhatsApp: ${$('#customer-whatsapp').value}`,
-    `Experiência: ${current.title}`,
-    `Cardápio: ${menu.name}`,
-    `Data: ${formatDate(dateInput.value)}`,
-    `Pessoas: ${guests}`,
-    `Atendimento: ${menu.service || 'Sob consulta'}`,
-    '',
-    'Quantidades calculadas:',
-    dishes,
-    '',
-    `Estimativa demonstrativa: ${money(total)}`,
-    `Observação: ${$('#customer-note').value || 'Sem observações.'}`,
-    '',
-    'Sei que os pratos e valores são demonstrativos e aguardo a confirmação da equipe.'
-  ].join('\n');
-
-  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank', 'noopener');
-});
 
 initialize();
