@@ -15,7 +15,7 @@ const experiences = {
         name: 'Feijoada para Delivery',
         description: 'Feijoada completa para receber em casa, disponível para entrega todos os sábados.',
         price: 69,
-        image: './feijoada-cards.webp',
+        image: './feijoada-delivery.webp',
         service: 'Delivery aos sábados',
         saturdayOnly: true,
         dishes: [
