@@ -12,12 +12,17 @@ const experiences = {
       {
         id: 'delivery',
         badge: 'Todos os sábados',
-        name: 'Feijoada para Delivery',
+        name: 'Feijoada Premium para Delivery',
         description: 'Feijoada completa para receber em casa, disponível para entrega todos os sábados.',
         price: 69,
         image: './feijoada-delivery-mobile.webp',
         imageAlt: 'Feijoada para Delivery da Chef Ana Santos com acompanhamentos embalados',
         imageLayout: 'portrait',
+        pricing: [
+          'Individual: R$ 69,00',
+          'Para 2 pessoas: R$ 95,00 (bem servida)'
+        ],
+        includesTitle: 'Acompanhamentos incluídos',
         includes: [
           '🍚 Arroz fresquinho',
           '🌿 Couve refogada',
@@ -26,6 +31,7 @@ const experiences = {
           '🥓 Torresmo crocante',
           '🍋 Sobremesa: Mousse de limão'
         ],
+        deliveryNote: 'Entrega: valor conforme o endereço.',
         service: 'Delivery aos sábados',
         saturdayOnly: true,
         dishes: [
@@ -44,6 +50,14 @@ const experiences = {
         description: 'Uma experiência completa para aniversários, encontros, empresas e comemorações.',
         price: 109,
         image: './feijoada-cards.webp',
+        includesTitle: 'Opções de acompanhamentos',
+        includes: [
+          'Arroz com amêndoas laminadas',
+          'Arroz com castanhas',
+          'Farofa de banana-da-terra com bacon',
+          'Farofa tradicional',
+          'Salada fresca da estação'
+        ],
         service: 'Evento na data escolhida',
         serviceFee: 300,
         dishes: [
@@ -71,7 +85,7 @@ const experiences = {
         name: 'Celebração Brasileira',
         description: 'Sabores afetivos em uma apresentação pensada para servir grupos.',
         price: 118,
-        image: './nhoque-ragu.webp',
+        image: './file-mignon-musseline.webp',
         service: 'Evento na data escolhida',
         dishes: [
           { name: 'Petiscos de boas-vindas', perPerson: 3, unit: 'un.' },
@@ -92,7 +106,7 @@ const experiences = {
         dishes: [
           { name: 'Caponata e pães', perPerson: 0.12, unit: 'kg' },
           { name: 'Ravióli artesanal', perPerson: 0.28, unit: 'kg' },
-          { name: 'Nhoque com ragu', perPerson: 0.28, unit: 'kg' },
+          { name: 'Fettuccine artesanal ao molho de camarões', perPerson: 0.28, unit: 'kg' },
           { name: 'Salada da estação', perPerson: 0.12, unit: 'kg' },
           { name: 'Tiramisù', perPerson: 1, unit: 'porção' }
         ]
@@ -143,22 +157,22 @@ const experiences = {
     title: 'Pratos com finalização em casa',
     eyebrow: 'Praticidade com assinatura',
     intro: 'Os pratos chegam preparados e porcionados. Você recebe instruções simples para aquecer, finalizar e servir.',
-    image: './chef-white-knife.webp',
+    image: './file-parmegiana.webp',
     choicesTitle: 'Escolha o que deseja finalizar em casa',
     choicesIntro: 'Selecione uma proposta. Os pratos chegam preparados e com orientações para servir no melhor ponto.',
     menus: [
       {
         id: 'conforto',
-        badge: 'Massas artesanais',
-        name: 'Menu Conforto',
-        description: 'Pratos afetivos prontos para a última etapa na sua cozinha.',
+        badge: 'Clássico italiano',
+        name: 'Filé à Parmegiana',
+        description: 'Um clássico completo, preparado para gratinar e servir na sua cozinha.',
         price: 79,
-        image: './nhoque-ragu.webp',
+        image: './file-parmegiana.webp',
         service: 'Retirada ou entrega combinada',
         dishes: [
-          { name: 'Nhoque artesanal', perPerson: 0.3, unit: 'kg' },
-          { name: 'Ragu da casa', perPerson: 0.18, unit: 'kg' },
-          { name: 'Queijo e ervas para finalizar', perPerson: 0.03, unit: 'kg' },
+          { name: 'Filé empanado', perPerson: 0.25, unit: 'kg' },
+          { name: 'Molho de tomate', perPerson: 0.12, unit: 'litro' },
+          { name: 'Queijo para gratinar', perPerson: 0.08, unit: 'kg' },
           { name: 'Sobremesa pronta', perPerson: 1, unit: 'porção' }
         ]
       },
@@ -208,12 +222,19 @@ function renderMenus() {
         <small>${menu.badge || `Opção 0${index + 1}`}</small>
         <strong>${menu.name}</strong>
         <span>${menu.description}</span>
+        ${menu.pricing ? `
+          <div class="menu-pricing">
+            <b>Valores</b>
+            <ul>${menu.pricing.map((item) => `<li>${item}</li>`).join('')}</ul>
+          </div>
+        ` : ''}
         ${menu.includes ? `
           <div class="menu-includes">
-            <b>Acompanhamentos</b>
+            <b>${menu.includesTitle || 'Acompanhamentos'}</b>
             <ul>${menu.includes.map((item) => `<li>${item}</li>`).join('')}</ul>
           </div>
         ` : ''}
+        ${menu.deliveryNote ? `<p class="menu-delivery-note">🚚 ${menu.deliveryNote}</p>` : ''}
         <a class="menu-whatsapp-button" href="${whatsappLink(menu)}" target="_blank" rel="noopener">
           Falar com a Chef <i aria-hidden="true">↗</i>
         </a>
