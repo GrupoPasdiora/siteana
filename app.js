@@ -2,7 +2,7 @@ const menuToggle = document.querySelector('.menu-toggle');
 const mainNav = document.querySelector('.main-nav');
 const occasionSelect = document.querySelector('#ocasiao');
 const budgetForm = document.querySelector('#budget-form');
-const WHATSAPP_NUMBER = '5569999999999'; // Troque pelo número real da Chef Ana Santos
+const WHATSAPP_NUMBER = '556999950406';
 
 menuToggle?.addEventListener('click', () => {
   const isOpen = mainNav.classList.toggle('open');
