@@ -1,78 +1,98 @@
 const WHATSAPP_NUMBER = '556999950406';
 
 const experiences = {
-  feijoada: {
-    title: 'Feijoada',
-    eyebrow: 'Especialidade brasileira',
-    intro: 'Escolha entre a Feijoada para Delivery aos sábados ou a Feijoada Premium para o seu evento.',
-    image: './feijoada-hero.webp',
-    choicesTitle: 'Como você deseja sua feijoada?',
-    choicesIntro: 'Escolha uma das duas opções e fale diretamente com a Chef Ana para consultar os detalhes.',
+  massas: {
+    title: 'Noite de Massas',
+    eyebrow: 'Massas artesanais',
+    intro: 'Uma seleção de massas artesanais com molhos encorpados, preparadas para uma noite especial à mesa.',
+    image: './ravioli-salvia.webp',
+    choicesTitle: 'Qual massa combina com a sua noite?',
+    choicesIntro: 'Escolha uma das massas artesanais e fale diretamente com a Chef Ana.',
     menus: [
       {
-        id: 'delivery',
-        badge: 'Todos os sábados',
-        name: 'Feijoada Premium para Delivery',
-        description: 'Feijoada completa para receber em casa, disponível para entrega todos os sábados.',
-        price: 69,
-        image: './feijoada-delivery-mobile.webp',
-        imageAlt: 'Feijoada para Delivery da Chef Ana Santos com acompanhamentos embalados',
-        imageLayout: 'portrait',
-        pricing: [
-          'Individual: R$ 69,00',
-          'Para 2 pessoas: R$ 95,00 (bem servida)'
-        ],
-        includesTitle: 'Acompanhamentos incluídos',
-        includes: [
-          '🍚 Arroz fresquinho',
-          '🌿 Couve refogada',
-          '🍊 Laranja suculenta',
-          '🍛 Farofa especial',
-          '🥓 Torresmo crocante',
-          '🍋 Sobremesa: Mousse de limão'
-        ],
-        deliveryNote: 'Entrega: valor conforme o endereço.',
-        service: 'Delivery aos sábados',
-        saturdayOnly: true,
+        id: 'fettuccine-camaroes',
+        badge: 'Massa artesanal',
+        name: 'Fettuccine ao molho de camarões',
+        description: 'Massa artesanal envolvida em um molho cremoso de camarões.',
+        image: './ravioli-salvia.webp',
+        service: 'Jantar na data escolhida',
         dishes: [
-          { name: 'Feijoada da Chef', perPerson: 0.4, unit: 'kg' },
-          { name: 'Arroz branco', perPerson: 0.15, unit: 'kg' },
-          { name: 'Farofa especial', perPerson: 0.08, unit: 'kg' },
-          { name: 'Couve refogada', perPerson: 0.1, unit: 'kg' },
-          { name: 'Vinagrete da casa', perPerson: 0.08, unit: 'kg' },
-          { name: 'Laranja fresca', perPerson: 0.5, unit: 'un.' }
+          { name: 'Fettuccine artesanal', perPerson: 0.28, unit: 'kg' },
+          { name: 'Molho cremoso de camarões', perPerson: 0.12, unit: 'litro' },
+          { name: 'Salada da estação', perPerson: 0.12, unit: 'kg' },
+          { name: 'Sobremesa individual', perPerson: 1, unit: 'porção' }
         ]
       },
       {
-        id: 'eventos',
-        badge: 'Para eventos',
-        name: 'Feijoada Premium para Eventos',
-        description: 'Uma experiência completa para aniversários, encontros, empresas e comemorações.',
-        price: 109,
-        image: './feijoada-cards.webp',
-        includesTitle: 'Opções de acompanhamentos',
-        includes: [
-          'Arroz com amêndoas laminadas',
-          'Arroz com castanhas',
-          'Farofa de banana-da-terra com bacon',
-          'Farofa tradicional',
-          'Salada fresca da estação'
-        ],
-        service: 'Evento na data escolhida',
-        serviceFee: 300,
+        id: 'ravioli-salvia',
+        badge: 'Massa recheada',
+        name: 'Ravióli artesanal à sálvia',
+        description: 'Ravióli recheado, finalizado na manteiga aromatizada com sálvia.',
+        image: './ravioli-salvia.webp',
+        service: 'Jantar na data escolhida',
         dishes: [
-          { name: 'Torresmo de entrada', perPerson: 0.1, unit: 'kg' },
-          { name: 'Feijoada da Chef', perPerson: 0.4, unit: 'kg' },
-          { name: 'Arroz branco', perPerson: 0.15, unit: 'kg' },
-          { name: 'Farofa especial', perPerson: 0.08, unit: 'kg' },
-          { name: 'Couve e vinagrete', perPerson: 0.18, unit: 'kg' },
-          { name: 'Pudim da casa', perPerson: 1, unit: 'porção' }
+          { name: 'Ravióli artesanal', perPerson: 0.28, unit: 'kg' },
+          { name: 'Manteiga de sálvia', perPerson: 0.05, unit: 'kg' },
+          { name: 'Salada da estação', perPerson: 0.12, unit: 'kg' },
+          { name: 'Sobremesa individual', perPerson: 1, unit: 'porção' }
+        ]
+      }
+    ]
+  },
+  risotos: {
+    title: 'Noite de Risotos',
+    eyebrow: 'Risotos cremosos',
+    intro: 'Risotos preparados e finalizados no ponto cremoso para uma experiência marcante. Escolha o seu e converse com a Chef Ana.',
+    image: './risoto-camaroes.webp',
+    choicesTitle: 'Qual risoto combina com a sua ocasião?',
+    choicesIntro: 'Selecione um dos risotos cremosos da Chef Ana e fale diretamente pelo WhatsApp.',
+    menus: [
+      {
+        id: 'file-mignon',
+        badge: 'Sabores intensos',
+        name: 'Risoto cremoso de filé mignon',
+        description: 'Risoto cremoso finalizado com cubos macios de filé mignon.',
+        image: './medalhao-risoto.webp',
+        service: 'Jantar na data escolhida',
+        dishes: [
+          { name: 'Risoto cremoso', perPerson: 0.3, unit: 'kg' },
+          { name: 'Filé mignon em cubos', perPerson: 0.15, unit: 'kg' },
+          { name: 'Salada da estação', perPerson: 0.12, unit: 'kg' },
+          { name: 'Sobremesa individual', perPerson: 1, unit: 'porção' }
+        ]
+      },
+      {
+        id: 'camarao',
+        badge: 'Frutos do mar',
+        name: 'Risoto de camarão',
+        description: 'Risoto cremoso com camarões dourados e um toque de ervas frescas.',
+        image: './risoto-camaroes.webp',
+        service: 'Jantar na data escolhida',
+        dishes: [
+          { name: 'Risoto cremoso', perPerson: 0.3, unit: 'kg' },
+          { name: 'Camarões dourados', perPerson: 0.15, unit: 'kg' },
+          { name: 'Salada da estação', perPerson: 0.12, unit: 'kg' },
+          { name: 'Sobremesa individual', perPerson: 1, unit: 'porção' }
+        ]
+      },
+      {
+        id: 'salmao',
+        badge: 'Leve e sofisticado',
+        name: 'Risoto de salmão',
+        description: 'Risoto cremoso com lascas de salmão e finalização delicada de ervas.',
+        image: './salmao-legumes.webp',
+        service: 'Jantar na data escolhida',
+        dishes: [
+          { name: 'Risoto cremoso', perPerson: 0.3, unit: 'kg' },
+          { name: 'Salmão em lascas', perPerson: 0.15, unit: 'kg' },
+          { name: 'Salada da estação', perPerson: 0.12, unit: 'kg' },
+          { name: 'Sobremesa individual', perPerson: 1, unit: 'porção' }
         ]
       }
     ]
   },
   eventos: {
-    title: 'Eventos e comemorações',
+    title: 'Jantares e Comemorações',
     eyebrow: 'Receber com fartura',
     intro: 'Menus demonstrativos para aniversários, encontros de família, recepções e confraternizações de qualquer tamanho.',
     image: './chef-red-counter.webp',
@@ -153,42 +173,72 @@ const experiences = {
       }
     ]
   },
-  finalizacao: {
-    title: 'Pratos com finalização em casa',
-    eyebrow: 'Praticidade com assinatura',
-    intro: 'Os pratos chegam preparados e porcionados. Você recebe instruções simples para aquecer, finalizar e servir.',
-    image: './file-parmegiana.webp',
-    choicesTitle: 'Escolha o que deseja finalizar em casa',
-    choicesIntro: 'Selecione uma proposta. Os pratos chegam preparados e com orientações para servir no melhor ponto.',
+  feijoada: {
+    title: 'Feijoada',
+    eyebrow: 'Especialidade brasileira',
+    intro: 'Escolha entre a Feijoada para Delivery aos sábados ou a Feijoada Premium para o seu evento.',
+    image: './feijoada-hero.webp',
+    choicesTitle: 'Como você deseja sua feijoada?',
+    choicesIntro: 'Escolha uma das duas opções e fale diretamente com a Chef Ana para consultar os detalhes.',
     menus: [
       {
-        id: 'conforto',
-        badge: 'Clássico italiano',
-        name: 'Filé à Parmegiana',
-        description: 'Um clássico completo, preparado para gratinar e servir na sua cozinha.',
-        price: 79,
-        image: './file-parmegiana.webp',
-        service: 'Retirada ou entrega combinada',
+        id: 'delivery',
+        badge: 'Todos os sábados',
+        name: 'Feijoada Premium para Delivery',
+        description: 'Feijoada completa para receber em casa, disponível para entrega todos os sábados.',
+        price: 69,
+        image: './feijoada-delivery-mobile.webp',
+        imageAlt: 'Feijoada para Delivery da Chef Ana Santos com acompanhamentos embalados',
+        imageLayout: 'portrait',
+        pricing: [
+          'Individual: R$ 69,00',
+          'Para 2 pessoas: R$ 95,00 (bem servida)'
+        ],
+        includesTitle: 'Acompanhamentos incluídos',
+        includes: [
+          '🍚 Arroz fresquinho',
+          '🌿 Couve refogada',
+          '🍊 Laranja suculenta',
+          '🍛 Farofa especial',
+          '🥓 Torresmo crocante',
+          '🍋 Sobremesa: Mousse de limão'
+        ],
+        deliveryNote: 'Entrega: valor conforme o endereço.',
+        service: 'Delivery aos sábados',
+        saturdayOnly: true,
         dishes: [
-          { name: 'Filé empanado', perPerson: 0.25, unit: 'kg' },
-          { name: 'Molho de tomate', perPerson: 0.12, unit: 'litro' },
-          { name: 'Queijo para gratinar', perPerson: 0.08, unit: 'kg' },
-          { name: 'Sobremesa pronta', perPerson: 1, unit: 'porção' }
+          { name: 'Feijoada da Chef', perPerson: 0.4, unit: 'kg' },
+          { name: 'Arroz branco', perPerson: 0.15, unit: 'kg' },
+          { name: 'Farofa especial', perPerson: 0.08, unit: 'kg' },
+          { name: 'Couve refogada', perPerson: 0.1, unit: 'kg' },
+          { name: 'Vinagrete da casa', perPerson: 0.08, unit: 'kg' },
+          { name: 'Laranja fresca', perPerson: 0.5, unit: 'un.' }
         ]
       },
       {
-        id: 'receber',
-        badge: 'Receber com elegância',
-        name: 'Menu Receber Bem',
-        description: 'Uma composição completa que parece recém-saída da cozinha da chef.',
-        price: 96,
-        image: './medalhao-risoto.webp',
-        service: 'Retirada ou entrega combinada',
+        id: 'eventos',
+        badge: 'Para eventos',
+        name: 'Feijoada Premium para Eventos',
+        description: 'Uma experiência completa para aniversários, encontros, empresas e comemorações.',
+        price: 109,
+        image: './feijoada-cards.webp',
+        includesTitle: 'Opções de acompanhamentos',
+        includes: [
+          'Arroz com amêndoas laminadas',
+          'Arroz com castanhas',
+          'Farofa de banana-da-terra com bacon',
+          'Farofa tradicional',
+          'Salada fresca da estação'
+        ],
+        service: 'Evento na data escolhida',
+        serviceFee: 300,
         dishes: [
-          { name: 'Medalhão pré-selado', perPerson: 0.22, unit: 'kg' },
-          { name: 'Risoto para finalizar', perPerson: 0.22, unit: 'kg' },
-          { name: 'Molho da casa', perPerson: 0.08, unit: 'litro' },
-          { name: 'Sobremesa pronta', perPerson: 1, unit: 'porção' }
+          { name: 'Torresmo de entrada', perPerson: 0.1, unit: 'kg' },
+          { name: 'Feijoada da Chef', perPerson: 0.4, unit: 'kg' },
+          { name: 'Arroz branco', perPerson: 0.15, unit: 'kg' },
+          { name: 'Farofa especial', perPerson: 0.08, unit: 'kg' },
+          { name: 'Couve e vinagrete', perPerson: 0.18, unit: 'kg' },
+          { name: 'Pudim da casa', perPerson: 1, unit: 'porção' }
         ]
       }
     ]
@@ -196,7 +246,7 @@ const experiences = {
 };
 
 const type = new URLSearchParams(window.location.search).get('tipo');
-const currentKey = Object.hasOwn(experiences, type) ? type : 'feijoada';
+const currentKey = Object.hasOwn(experiences, type) ? type : 'massas';
 const current = experiences[currentKey];
 
 const $ = (selector) => document.querySelector(selector);
