@@ -96,40 +96,96 @@ const experiences = {
     eyebrow: 'Receber com fartura',
     intro: 'Menus demonstrativos para aniversários, encontros de família, recepções e confraternizações de qualquer tamanho.',
     image: './chef-red-counter.webp',
-    choicesTitle: 'Escolha o menu para seu evento',
-    choicesIntro: 'Selecione a proposta que mais combina com a ocasião e fale diretamente com a Chef Ana.',
+    choicesTitle: 'Escolha os pratos para o seu evento',
+    choicesIntro: 'Todos os pratos disponíveis para o seu jantar ou comemoração. Escolha um e fale diretamente com a Chef Ana.',
     menus: [
       {
-        id: 'brasileiro',
-        badge: 'Menu brasileiro',
-        name: 'Celebração Brasileira',
-        description: 'Sabores afetivos em uma apresentação pensada para servir grupos.',
-        price: 118,
-        image: './file-mignon-musseline.webp',
-        service: 'Evento na data escolhida',
-        dishes: [
-          { name: 'Petiscos de boas-vindas', perPerson: 3, unit: 'un.' },
-          { name: 'Filé ao molho da casa', perPerson: 0.22, unit: 'kg' },
-          { name: 'Arroz festivo', perPerson: 0.15, unit: 'kg' },
-          { name: 'Legumes assados', perPerson: 0.14, unit: 'kg' },
-          { name: 'Sobremesa individual', perPerson: 1, unit: 'porção' }
-        ]
+        id: 'salmao-grelhado',
+        badge: 'Menu leve',
+        name: 'Salmão grelhado com legumes assados',
+        description: 'Salmão dourado, servido com legumes assados.',
+        image: './salmao-grelhado.webp',
+        service: 'Evento na data escolhida'
       },
       {
-        id: 'italiano',
-        badge: 'Menu italiano',
-        name: 'Mesa Italiana',
-        description: 'Massas artesanais e molhos encorpados para uma comemoração acolhedora.',
-        price: 105,
+        id: 'fettuccine-camaroes',
+        badge: 'Massa artesanal',
+        name: 'Fettuccine ao molho de camarões',
+        description: 'Massa artesanal envolvida em um molho cremoso de camarões.',
         image: './ravioli-salvia.webp',
-        service: 'Evento na data escolhida',
-        dishes: [
-          { name: 'Caponata e pães', perPerson: 0.12, unit: 'kg' },
-          { name: 'Ravióli artesanal', perPerson: 0.28, unit: 'kg' },
-          { name: 'Fettuccine artesanal ao molho de camarões', perPerson: 0.28, unit: 'kg' },
-          { name: 'Salada da estação', perPerson: 0.12, unit: 'kg' },
-          { name: 'Tiramisù', perPerson: 1, unit: 'porção' }
-        ]
+        service: 'Evento na data escolhida'
+      },
+      {
+        id: 'file-gorgonzola',
+        badge: 'Jantar exclusivo',
+        name: 'Filé mignon ao molho de gorgonzola',
+        description: 'Filé mignon com molho cremoso de gorgonzola.',
+        image: './file-mignon-pure.webp',
+        service: 'Evento na data escolhida'
+      },
+      {
+        id: 'file-parmegiana',
+        badge: 'Clássico especial',
+        name: 'Filé à parmegiana',
+        description: 'Filé empanado, molho de tomate e queijo gratinado.',
+        image: './file-parmegiana.webp',
+        service: 'Evento na data escolhida'
+      },
+      {
+        id: 'dourado-bechamel',
+        badge: 'Peixes',
+        name: 'Filé de dourado gratinado ao molho bechamel',
+        description: 'Peixe delicado com cobertura dourada e molho bechamel.',
+        image: './dourado-bechamel.webp',
+        service: 'Evento na data escolhida'
+      },
+      {
+        id: 'camarao-moranga',
+        badge: 'Assinatura',
+        name: 'Camarão na moranga',
+        description: 'Moranga assada, recheio cremoso e camarões dourados.',
+        image: './camarao-moranga.webp',
+        service: 'Evento na data escolhida'
+      },
+      {
+        id: 'maminha',
+        badge: 'Sabores intensos',
+        name: 'Maminha braseada na cerveja preta',
+        description: 'Carne macia, fatiada e servida com molho encorpado.',
+        image: './maminha-cerveja-preta.webp',
+        service: 'Evento na data escolhida'
+      },
+      {
+        id: 'file-musseline',
+        badge: 'Premium',
+        name: 'Filé mignon com musseline de batatas',
+        description: 'Filé macio servido sobre musseline de batatas.',
+        image: './file-mignon-musseline.webp',
+        service: 'Evento na data escolhida'
+      },
+      {
+        id: 'salmao-asiatico',
+        badge: 'Sabores asiáticos',
+        name: 'Salmão ao molho asiático',
+        description: 'Salmão laqueado em molho intenso, finalizado com gergelim.',
+        image: './salmao-asiatico.webp',
+        service: 'Evento na data escolhida'
+      },
+      {
+        id: 'paella',
+        badge: 'Para compartilhar',
+        name: 'Paella',
+        description: 'Arroz e frutos do mar preparados para chegar à mesa com presença.',
+        image: './paella.webp',
+        service: 'Evento na data escolhida'
+      },
+      {
+        id: 'salmao-legumes',
+        badge: 'Menu leve',
+        name: 'Salmão com crosta de ervas e legumes',
+        description: 'Crosta aromática, legumes tostados e ervas frescas.',
+        image: './salmao-legumes.webp',
+        service: 'Evento na data escolhida'
       }
     ]
   },
