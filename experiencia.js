@@ -14,7 +14,7 @@ const experiences = {
         badge: 'Massa artesanal',
         name: 'Fettuccine ao molho de camarões',
         description: 'Massa artesanal envolvida em um molho cremoso de camarões.',
-        image: './ravioli-salvia.webp',
+        image: './fettuccine-camaroes.webp',
         service: 'Jantar na data escolhida',
         dishes: [
           { name: 'Fettuccine artesanal', perPerson: 0.28, unit: 'kg' },
@@ -80,7 +80,7 @@ const experiences = {
         badge: 'Leve e sofisticado',
         name: 'Risoto de salmão',
         description: 'Risoto cremoso com lascas de salmão e finalização delicada de ervas.',
-        image: './salmao-legumes.webp',
+        image: './risoto-salmao.webp',
         service: 'Jantar na data escolhida',
         dishes: [
           { name: 'Risoto cremoso', perPerson: 0.3, unit: 'kg' },
@@ -186,46 +186,6 @@ const experiences = {
         description: 'Crosta aromática, legumes tostados e ervas frescas.',
         image: './salmao-legumes.webp',
         service: 'Evento na data escolhida'
-      }
-    ]
-  },
-  jantar: {
-    title: 'Jantar Intimista',
-    eyebrow: 'Uma noite especial',
-    intro: 'Escolha uma proposta de menu autoral para uma noite especial.',
-    image: './chef-green.webp',
-    choicesTitle: 'Escolha o menu para seu jantar',
-    choicesIntro: 'Duas propostas completas para uma noite especial. Escolha uma e converse com a Chef Ana.',
-    menus: [
-      {
-        id: 'terra',
-        badge: 'Carnes e sabores intensos',
-        name: 'Menu Terra',
-        description: 'Sabores intensos, texturas cremosas e finalização elegante.',
-        price: 159,
-        image: './file-mignon-pure.webp',
-        service: 'Jantar na data escolhida',
-        dishes: [
-          { name: 'Entrada da estação', perPerson: 1, unit: 'porção' },
-          { name: 'Filé ao molho de vinho', perPerson: 0.22, unit: 'kg' },
-          { name: 'Purê aveludado', perPerson: 0.18, unit: 'kg' },
-          { name: 'Sobremesa autoral', perPerson: 1, unit: 'porção' }
-        ]
-      },
-      {
-        id: 'mar',
-        badge: 'Peixes e frutos do mar',
-        name: 'Menu Mar',
-        description: 'Uma sequência leve com camarões, peixe e ervas frescas.',
-        price: 169,
-        image: './risoto-camaroes.webp',
-        service: 'Jantar na data escolhida',
-        dishes: [
-          { name: 'Entrada cítrica', perPerson: 1, unit: 'porção' },
-          { name: 'Risoto de camarões', perPerson: 0.32, unit: 'kg' },
-          { name: 'Salmão com ervas', perPerson: 0.2, unit: 'kg' },
-          { name: 'Sobremesa leve', perPerson: 1, unit: 'porção' }
-        ]
       }
     ]
   },
